@@ -1,0 +1,33 @@
+﻿<Window x:Class="calculator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:calculator"
+        mc:Ignorable="d"
+        Title="Calculator" Height="420" Width="350" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="Oxygen-Icons.org-Oxygen-Apps-accessories-calculator.ico" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}">
+    <Grid Width="330" Margin="2,0,2,1">
+        <Button Content="7" HorizontalAlignment="Left" Margin="2,173,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="Button_Click"/>
+        <Button Content="8" HorizontalAlignment="Left" Margin="84,173,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="Button_Click"/>
+        <Button Content="9" HorizontalAlignment="Left" Margin="166,173,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="Button_Click"/>
+        <Button Content="×" HorizontalAlignment="Left" Margin="248,173,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Click="operator_click"/>
+        <Button Content="4" HorizontalAlignment="Left" Margin="2,225,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="Button_Click"/>
+        <Button Content="5" HorizontalAlignment="Left" Margin="84,225,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="Button_Click"/>
+        <Button Content="6" HorizontalAlignment="Left" Margin="166,225,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="Button_Click"/>
+        <Button Content="-" HorizontalAlignment="Left" Margin="248,225,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Click="operator_click"/>
+        <Button Content="1" HorizontalAlignment="Left" Margin="2,277,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="Button_Click"/>
+        <Button Content="2" HorizontalAlignment="Left" Margin="84,277,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="Button_Click"/>
+        <Button Content="3" HorizontalAlignment="Left" Margin="166,277,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="Button_Click"/>
+        <Button Content="+" HorizontalAlignment="Left" Margin="248,277,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Click="operator_click"/>
+        <Button Content="-/+" HorizontalAlignment="Left" Margin="2,329,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="neg_click"/>
+        <Button Content="0" HorizontalAlignment="Left" Margin="84,329,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="Button_Click"/>
+        <Button Content="." HorizontalAlignment="Left" Margin="166,329,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="Button_Click"/>
+        <Button Content="=" HorizontalAlignment="Left" Margin="248,329,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Click="calculate_click"/>
+        <Button Content="%" HorizontalAlignment="Left" Margin="2,121,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" BorderBrush="{x:Null}"/>
+        <Button Content="CE" HorizontalAlignment="Left" Margin="84,121,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" BorderBrush="{x:Null}" Click="ce_click"/>
+        <Button Content="C" HorizontalAlignment="Left" Margin="166,121,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Click="c_click"/>
+        <Button Content="÷" HorizontalAlignment="Left" Margin="248,121,0,0" VerticalAlignment="Top" Width="80" Height="50" RenderTransformOrigin="0.351,3.512" FontSize="24" BorderBrush="{x:Null}" Click="operator_click"/>
+        <TextBox x:Name="textBox_Result" HorizontalAlignment="Left" Height="59" Margin="2,52,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="326" BorderBrush="#FFC8C8C8" Background="#FFC8C8C8" TextAlignment="Right" FontSize="36" IsReadOnly="True"/>
+        <TextBox x:Name="history_Record" HorizontalAlignment="Left" Height="38" Margin="2,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="326" Background="#FFC8C8C8" BorderBrush="#FFC8C8C8" TextAlignment="Right" IsEnabled="False" IsReadOnly="True"/>
+    </Grid>
+</Window>
