@@ -22,10 +22,12 @@ namespace calculator
     {
         Double numberOne = 0.0;
         Double numberTwo = 0.0;
+        //Double inputingNumber = 0.0;
         Double result = 0.0;
         string operatorInput = "";
         bool isCalculationPerformed = false;
-        bool secondNumberInputed = false;
+        bool NumberInputed = false;
+        string[] opts = { "+", "-", "×", "÷" };
 
         public MainWindow()
         {
@@ -50,7 +52,7 @@ namespace calculator
             result = 0.0;
             operatorInput = "";
             isCalculationPerformed = false;
-            secondNumberInputed = false;
+            NumberInputed = false;
         }
 
         private void neg_click(object sender, RoutedEventArgs e)
@@ -79,10 +81,10 @@ namespace calculator
             }
 
             // 当已有运算符但未执行计算时，输入第二个数时需要清空textbox2
-            if (operatorInput != "" && secondNumberInputed == false)
+            if (operatorInput != "" && NumberInputed == false)
             {
                 textBox_Result.Clear();
-                secondNumberInputed = true;
+                NumberInputed = true;
             }
 
             // 整数第一位不能为0，小数可以
@@ -106,11 +108,14 @@ namespace calculator
         }
 
 
-
-
         private void operator_click(object sender, RoutedEventArgs e)
         {
-            if (operatorInput != "")
+            if (history_Record.Text.Length > 0 && opts.Contains(history_Record.Text.Substring(history_Record.Text.Length-1)) && !NumberInputed)
+            {
+                
+                return;
+            }
+            else if (operatorInput != "")
             {
                 if (!isCalculationPerformed)
                 {
@@ -132,11 +137,11 @@ namespace calculator
                             result = numberOne / numberTwo;
                             break;
                     }
+                    operatorInput = "";
                 }
                 textBox_Result.Text = result.ToString();
                 // isCalculationPerformed = true;
-                secondNumberInputed = false;
-                isCalculationPerformed = false;
+                NumberInputed = false;
                 numberTwo = 0.0;
             }
 
@@ -146,7 +151,7 @@ namespace calculator
             Button button = (Button)sender;
             operatorInput = (string)button.Content;
             history_Record.Text = numberOne + operatorInput;
-            
+            isCalculationPerformed = false;
         }
 
         private void calculate_click(object sender, RoutedEventArgs e)
