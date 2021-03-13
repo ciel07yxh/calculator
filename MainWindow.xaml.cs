@@ -20,12 +20,17 @@ namespace calculator
     /// </summary>
     public partial class MainWindow : Window
     {
-        Double numberOne = 0.0;
-        Double numberTwo = 0.0;
-        Double result = 0.0;
-        string operatorInput = "";
-        bool isCalculationPerformed = false;
-        bool secondNumberInputed = false;
+        // variables to save input values
+        Double numberOne ;
+        Double numberTwo ;
+        Double result ;
+        string operatorInput = null;
+
+        // use a state machine model that contains 3 states
+        string state = "numberInputting";
+
+        //string[] states = {"numberInputting", "operatorInputted", "calculated" };
+        //string[] operatorOptions = {"+", "-", "×", "÷" };
 
         public MainWindow()
         {
@@ -34,7 +39,7 @@ namespace calculator
 
         private void ce_click(object sender, RoutedEventArgs e)
         {
-            // 仅归零textBox2
+            // clear the textBox2 and show 0
             textBox_Result.Clear();
             textBox_Result.Text = "0";
         }
@@ -44,23 +49,24 @@ namespace calculator
             textBox_Result.Clear();
             textBox_Result.Text = "0";
             history_Record.Clear();
-            // 初始化其余变量
+            // initialize all the variables
             numberTwo = 0.0;
             numberOne = 0.0;
             result = 0.0;
-            operatorInput = "";
-            isCalculationPerformed = false;
-            secondNumberInputed = false;
+            operatorInput = null;
+            state = "numberInputting";
         }
 
         private void neg_click(object sender, RoutedEventArgs e)
         {
+            // -/+ convert
             if (textBox_Result.Text.Contains("-"))
             {
                 textBox_Result.Text = textBox_Result.Text.Substring(1);
             }
             else
             {
+                // 0 cannot be negative
                 if (textBox_Result.Text != "0")
                 {
                     textBox_Result.Text = "-" + textBox_Result.Text;
@@ -71,27 +77,30 @@ namespace calculator
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
-
-            // 一次计算完成后，初始化
-            if (isCalculationPerformed)
+            switch (state)
             {
-                c_click(sender, e);
+                case "operatorInputted":
+                    // start to input numberTwo after the input of operators
+                    textBox_Result.Clear();
+                    state = "numberInputting";
+                    break;
+                case "calculated":
+                    // one calculation completed
+                    c_click(sender, e);
+                    break;
+                default:
+                    break;
             }
+            input_number(button);
+        }
 
-            // 当已有运算符但未执行计算时，输入第二个数时需要清空textbox2
-            if (operatorInput != "" && secondNumberInputed == false)
-            {
-                textBox_Result.Clear();
-                secondNumberInputed = true;
-            }
-
-            // 整数第一位不能为0，小数可以
+        private void input_number(Button button)
+        {
             if (textBox_Result.Text == "0" && (string)button.Content != ".")
             {
                 textBox_Result.Clear();
             }
-
-            // dot deduplication
+            // dot de-duplication
             if ((string)button.Content == ".")
             {
                 if (!textBox_Result.Text.Contains("."))
@@ -106,91 +115,125 @@ namespace calculator
         }
 
 
-
-
         private void operator_click(object sender, RoutedEventArgs e)
         {
-            if (operatorInput != "")
-            {
-                if (!isCalculationPerformed)
-                {
-                    numberTwo = Double.Parse(textBox_Result.Text);
-
-                    // 执行2数的计算
-                    switch (operatorInput)
-                    {
-                        case "+":
-                            result = numberOne + numberTwo;
-                            break;
-                        case "-":
-                            result = numberOne - numberTwo;
-                            break;
-                        case "×":
-                            result = numberOne * numberTwo;
-                            break;
-                        case "÷":
-                            result = numberOne / numberTwo;
-                            break;
-                    }
-                }
-                textBox_Result.Text = result.ToString();
-                // isCalculationPerformed = true;
-                secondNumberInputed = false;
-                isCalculationPerformed = false;
-                numberTwo = 0.0;
-            }
-
-            // 输入运算符时，生成第一个number
-            numberOne = Double.Parse(textBox_Result.Text);
-            // 记录运算符，并在history中加入运算符的显示
             Button button = (Button)sender;
+            switch (state)
+            {
+                case "numberInputting":
+                    // numberOne inputted
+                    if (operatorInput == null)
+                    {
+                        numberOne = Double.Parse(textBox_Result.Text);
+                        history_Record.Text = numberOne.ToString() + (string)button.Content;
+                        state = "operatorInputted";
+                    }
+                    // numberTwo inputted
+                    else
+                    {
+                        numberTwo = Double.Parse(textBox_Result.Text);
+                        calculate();
+                        textBox_Result.Text = result.ToString();
+                        numberOne = result;
+
+                        history_Record.Text = numberOne.ToString() + (string)button.Content;
+                        state = "calculated";
+                    }
+                    break;
+                // multiple operator input
+                case "operatorInputted":
+                    history_Record.Text = numberOne.ToString() + (string)button.Content;
+                    state = "operatorInputted";
+                    break;
+                case "calculated":
+                    textBox_Result.Text = result.ToString();
+                    history_Record.Text = numberOne.ToString() + (string)button.Content;
+                    state = "operatorInputted";
+                    break;
+                default:
+                    break;
+            }
             operatorInput = (string)button.Content;
-            history_Record.Text = numberOne + operatorInput;
-            
         }
 
         private void calculate_click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
-            // 未输入operator就计算
-            if (operatorInput == "")
+            switch (state)
             {
-                history_Record.Text = textBox_Result.Text + "=";
-                isCalculationPerformed = true;
-            }
-            else
-            {
-                // 点击=时生成第二个数
-                if (!history_Record.Text.Contains("="))
-                {
-                    numberTwo = Double.Parse(textBox_Result.Text);
-                }
-                // 执行2数的计算
-                switch (operatorInput)
-                {
-                    case "+":
-                        result = numberOne + numberTwo;
-                        break;
-                    case "-":
-                        result = numberOne - numberTwo;
-                        break;
-                    case "×":
-                        result = numberOne * numberTwo;
-                        break;
-                    case "÷":
-                        result = numberOne / numberTwo;
-                        break;
-                }
-                textBox_Result.Text = result.ToString();
-                // 一次计算后清空参数，numberOne存储上一次计算的结果
-                history_Record.Text = numberOne.ToString() + operatorInput + numberTwo.ToString() + "=";
-                numberOne = result;
-                isCalculationPerformed = true;
-                // = 去重
-                if (!history_Record.Text.Contains("="))
-                {
+                case "numberInputting":
+                    // end with numberTwo
+                    if (operatorInput != null)
+                    {
+                        numberTwo = Double.Parse(textBox_Result.Text);
+                        history_Record.Text = numberOne.ToString() + operatorInput + numberTwo.ToString() + "=";
+                        calculate();
+                        textBox_Result.Text = result.ToString();
+                        numberOne = result;
+                        state = "calculated";
+                    }
+                    // end with numberOne
+                    else
+                    {
+                        numberOne = Double.Parse(textBox_Result.Text);
+                        history_Record.Text = numberOne.ToString() + "=";
+                        state = "calculated";
+                    }                    
+                    break;
+                case "operatorInputted":
+                    // "=" make numberTwo as numberOne, and calculate
+                    numberOne = Double.Parse(textBox_Result.Text);
+                    numberTwo = numberOne;
+                    calculate();
+                    textBox_Result.Text = result.ToString();
                     history_Record.Text = numberOne.ToString() + operatorInput + numberTwo.ToString() + "=";
-                }
+                    numberOne = result;
+                    state = "calculated";
+                    break;
+                case "calculated":
+                    calculate();
+                    numberOne = result;
+                    textBox_Result.Text = result.ToString();
+                    history_Record.Text = numberOne.ToString() + operatorInput + numberTwo.ToString() + "=";
+                    
+                    break;
+                default:
+                    break;
+            }
+            // after calculation, numberOne equals result, numberTwo is unchanged.
+            }
+
+        private void calculate()
+        {
+             switch (operatorInput)
+            {
+                case "+":
+                    result = numberOne + numberTwo;
+                    break;
+                case "-":
+                    result = numberOne - numberTwo;
+                    break;
+                case "×":
+                    result = numberOne * numberTwo;
+                    break;
+                case "÷":
+                    result = numberOne / numberTwo;
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+
+        private void del_click(object sender, RoutedEventArgs e)
+        {
+            if (textBox_Result.Text.Length == 1)
+            {
+                textBox_Result.Text = "0";
+            }
+            else if (textBox_Result.Text.Length > 1 && textBox_Result.Text != "0")
+            {
+                textBox_Result.Text = textBox_Result.Text.Remove(textBox_Result.Text.Length - 1);
             }
         }
     }
