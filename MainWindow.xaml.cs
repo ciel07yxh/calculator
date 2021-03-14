@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+//using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -36,6 +37,8 @@ namespace calculator
         {
             InitializeComponent();
         }
+
+        
 
         private void ce_click(object sender, RoutedEventArgs e)
         {
@@ -235,6 +238,84 @@ namespace calculator
             {
                 textBox_Result.Text = textBox_Result.Text.Remove(textBox_Result.Text.Length - 1);
             }
+        }
+
+        private void keydown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.D0:
+                case Key.NumPad0:
+                    button0.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.D1:
+                case Key.NumPad1:
+                    button1.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.D2:
+                case Key.NumPad2:
+                    button2.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.D3:
+                case Key.NumPad3:
+                    button3.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.D4:
+                case Key.NumPad4:
+                    button4.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.D5:
+                case Key.NumPad5:
+                    button5.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.D6:
+                case Key.NumPad6:
+                    button6.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.D7:
+                case Key.NumPad7:
+                    button7.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.D8:
+                case Key.NumPad8:
+                    button8.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.D9:
+                case Key.NumPad9:
+                    button9.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.Decimal:
+                    button_decimal.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.Add:
+                case Key.OemPlus:
+                    botton_add.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.OemMinus:
+                case Key.Subtract:
+                    botton_min.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.Multiply:
+                    botton_multiply.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.Divide:
+                    botton_div.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.Delete:
+                    botton_c.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.Back:
+                    botton_del.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.Escape:
+                    botton_c.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+                case Key.Enter:
+                case Key.Execute:
+                    botton_eql.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    break;
+            }
+
         }
     }
 }
